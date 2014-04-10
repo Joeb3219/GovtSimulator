@@ -2,6 +2,7 @@ package com.charredsoftware.governmentsimulator.people;
 
 import com.charredsoftware.governmentsimulator.legal.Party;
 import com.charredsoftware.governmentsimulator.legal.State;
+import com.charredsoftware.governmentsimulator.util.Controller;
 
 /**
  * @author Joe Boyle <joe@charredgames.com>
@@ -16,7 +17,7 @@ public class Person {
 	public State state;
 	public Job job;
 	
-	public Person(String first, String last, int age, int money, State state, Party party){
+	public Person(String first, String last, int age, long money, State state, Party party){
 		firstName = first;
 		lastName = last;
 		this.age = age;
@@ -30,11 +31,12 @@ public class Person {
 	}
 	
 	public double getMoney(){
+		if(money >= 100000000000000000L) money = 10000000000000000L;
 		return money / 100.00;
 	}
 	
 	public String getMoneyString(){
-		return "$" + getMoney();
+		return "$" + Controller.simpleFormat(getMoney(), 0);
 	}
-	
+
 }

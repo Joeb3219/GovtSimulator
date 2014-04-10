@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.view.View;
-import android.widget.Toast;
 
 import com.charredsoftware.governmentsimulator.util.Controller;
 import com.charredsoftware.governmentsimulator.util.FakeButton;
@@ -52,9 +51,20 @@ public class Board extends View{
 	}
 	
 	private void loadMainGame(Canvas canvas){
+		int standardText = 24;
 		paint.setColor(0xFF448844);
 		paint.setStyle(Style.FILL);
-		canvas.drawRect(0, getHeight() - 100, getWidth(), getHeight(), paint);
+		int top = getHeight() - 100;
+		canvas.drawRect(0, top, getWidth(), getHeight(), paint);
+		paint.setColor(0xFFFFFFFF);
+		paint.setTextSize(standardText);
+		canvas.drawText(MainActivity.time.getDate(), 0, top + 30, paint);
+		
+		//Draw top portion of screen
+		paint.setTextSize(standardText);
+		paint.setColor(0xFF000000);
+		canvas.drawText(MainActivity.time.getDate(), 5, 30, paint);
+		canvas.drawText(Controller.player.getMoneyString(), getWidth() - paint.measureText(Controller.player.getMoneyString()) - 5, 30, paint);
 	}
 	
 	private void drawButtonSet(Canvas canvas, ArrayList<FakeButton> newButtons){

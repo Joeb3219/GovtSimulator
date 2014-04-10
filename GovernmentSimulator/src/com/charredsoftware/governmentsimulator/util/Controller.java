@@ -33,8 +33,8 @@ public class Controller {
 		
 		WindowManager wm = (WindowManager) view.getContext().getSystemService(Context.WINDOW_SERVICE);
 		Display display = wm.getDefaultDisplay();
-		Point size = new Point();
 		try { 
+			Point size = new Point();
 			display.getSize(size); 
 			width = size.x; 
 			height = size.y; 
@@ -58,6 +58,21 @@ public class Controller {
 	public static void addState(State state){
 		states.add(state);
 		stateNames.add(state.name);
+	}
+	
+	//simpleFormat code borrowed from StackOverflow user @Elijah Saounkine
+	
+	private static char[] c = new char[]{'k', 'm', 'b', 't'};
+
+	public static String simpleFormat(double n, int iteration) {
+	    double d = ((long) n / 100) / 10.0;
+	    boolean isRound = (d * 10) %10 == 0;
+	    return (d < 1000?
+	        ((d > 99.9 || isRound || (!isRound && d > 9.99)? 
+	         (int) d * 10 / 10 : d + ""
+	         ) + "" + c[iteration]) 
+	        : simpleFormat(d, iteration+1));
+
 	}
 	
 }

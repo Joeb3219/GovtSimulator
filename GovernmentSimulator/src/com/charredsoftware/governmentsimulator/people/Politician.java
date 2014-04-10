@@ -16,7 +16,7 @@ public class Politician extends Person{
 	public int dSupport, rSupport;
 	public Map<Bill, Integer> history = new HashMap<Bill, Integer>();
 
-	public Politician(String first, String last, int age, int money, State state, Party party) {
+	public Politician(String first, String last, int age, long money, State state, Party party) {
 		super(first, last, age, money, state, party);
 		if(party == Party.DEMOCRAT){
 			dSupport = 50;

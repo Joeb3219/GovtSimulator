@@ -5,7 +5,6 @@ import java.util.Arrays;
 
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -26,14 +25,16 @@ import com.charredsoftware.governmentsimulator.people.Politician;
 import com.charredsoftware.governmentsimulator.util.Controller;
 import com.charredsoftware.governmentsimulator.util.FakeButton;
 import com.charredsoftware.governmentsimulator.util.GameState;
+import com.charredsoftware.governmentsimulator.util.Time;
 
 public class MainActivity extends Activity {
 
 	public static GameState state = GameState.LOADING;
-	private Board board;
-	private LinearLayout secondary;
-	private EditText nameField;
-	private Spinner stateField, partyField;
+	private static Board board;
+	private static LinearLayout secondary;
+	private static EditText nameField;
+	private static Spinner stateField, partyField;
+	public static Time time;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,8 @@ public class MainActivity extends Activity {
 	    requestWindowFeature(Window.FEATURE_NO_TITLE);
 	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_main);
+
+		time = new Time();
 		
 		board = new Board(this);
 		addContentView(board, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
@@ -99,7 +102,7 @@ public class MainActivity extends Activity {
 		submit.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
-				Controller.player = new Politician(nameField.getText().toString(), nameField.getText().toString(), 35, 1000000, 
+				Controller.player = new Politician(nameField.getText().toString(), nameField.getText().toString(), 35, 1000000L, 
 						State.getStateByString(stateField.getSelectedItem().toString()), Party.getPartyByString(partyField.getSelectedItem().toString()));
 				//Toast.makeText(v.getContext(), "Hello, " + Controller.player.firstName + ". You are a " + Controller.player.party.name + " from " + 
 				//		Controller.player.state.name + ". You have " + Controller.player.getMoneyString(), Toast.LENGTH_LONG).show();
