@@ -6,6 +6,7 @@ import java.util.Map;
 import com.charredsoftware.governmentsimulator.legal.Bill;
 import com.charredsoftware.governmentsimulator.legal.Party;
 import com.charredsoftware.governmentsimulator.legal.State;
+import com.charredsoftware.governmentsimulator.util.Controller;
 
 /**
  * @author Joe Boyle <joe@charredgames.com>
@@ -25,6 +26,8 @@ public class Politician extends Person{
 			rSupport = 50;
 			dSupport = 25;
 		}
+		job = Job.REPRESENTATIVE;
+		Controller.politicians.add(this);
 	}
 	
 	

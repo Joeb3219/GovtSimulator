@@ -1,0 +1,15 @@
+<?xml version = "1.0" ?>
+
+<politicians>
+    
+    <politician>
+        <firstName>Alexander</firstName>
+        <lastName>Hamilton</lastName>
+        <party>Democrat</party>
+        <supprt democrat = "50" republican = "25"/>
+        <state>Ohio</state>
+        <job>Representative</job>
+        <money>11500000</money>
+    </politician>
+    
+</politicians>

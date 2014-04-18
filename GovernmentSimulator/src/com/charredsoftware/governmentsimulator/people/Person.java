@@ -24,6 +24,11 @@ public class Person {
 		this.money = money;
 		this.party = party;
 		this.state = state;
+		this.job = Job.NON_POLITICAL;
+	}
+
+	public void pay(){
+		money += job.sallary / (12 * 4);
 	}
 	
 	public void alterBalance(double val){

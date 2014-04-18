@@ -1,0 +1,411 @@
+<?xml version="1.0" ?>
+
+<stocks>
+
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Chemify</name>
+        <symbol>CHM</symbol>
+        <price>11500</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "technology" influence = "20" ideal = "100"/>
+            <factor name = "environment" influence = "10" ideal = "100"/>
+            <factor name = "education" influence = "70" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>War Supplies, Inc.</name>
+        <symbol>WAR</symbol>
+        <price>22500</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "war" influence = "80" ideal = "100"/>
+            <factor name = "foreignrelations" influence = "20" ideal = "00"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Pear Computers</name>
+        <symbol>PEAR</symbol>
+        <price>5500</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "technology" influence = "75" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+            <factor name = "communications" influence = "10" ideal = "100"/>
+            <factor name = "bigbusiness" influence = "5" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Googol</name>
+        <symbol>GOO</symbol>
+        <price>65500</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "technology" influence = "50" ideal = "100"/>
+            <factor name = "communications" influence = "40" ideal = "100"/>
+            <factor name = "science" influence = "5" ideal = "100"/>
+            <factor name = "bigbusiness" influence = "5" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Gold Digging, Inc.</name>
+        <symbol>GLD</symbol>
+        <price>9900</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "economy" influence = "35" ideal = "100"/>
+            <factor name = "technology" influence = "5" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Oil Hoarders, Inc.</name>
+        <symbol>OIL</symbol>
+        <price>54593</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "war" influence = "30" ideal = "100"/>
+            <factor name = "foreignrelations" influence = "30" ideal = "100"/>
+            <factor name = "technology" influence = "20" ideal = "0"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "50"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    <stock>
+        <exchange>UEA</exchange>
+        <name>Fort Cars</name>
+        <symbol>FORT</symbol>
+        <price>2243</price>
+        <dividend>00</dividend>
+        <factors>
+            <factor name = "transportation" influence = "80" ideal = "100"/>
+            <factor name = "energy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "10" ideal = "100"/>
+        </factors>
+    </stock>
+    
+    
+    
+</stocks>

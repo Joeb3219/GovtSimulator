@@ -2,6 +2,10 @@ package com.charredsoftware.governmentsimulator.util;
 
 import java.text.DateFormatSymbols;
 
+import com.charredsoftware.governmentsimulator.MainActivity;
+import com.charredsoftware.governmentsimulator.legal.NationalIndicator;
+import com.charredsoftware.governmentsimulator.people.Politician;
+
 public class Time {
 
 	public int week, month, year;
@@ -19,20 +23,24 @@ public class Time {
 	}
 	
 	public void advanceWeek(){
+		MainActivity.indicators.setLevel(NationalIndicator.TECHNOLOGY, MainActivity.indicators.getLevel(NationalIndicator.TECHNOLOGY) + 1);
+		for(Politician p : Controller.politicians) p.pay();
+		MainActivity.market.advanceWeek();
 		week += 1;
 		if(week < 5) return;
 		week = 1;
 		advanceMonth();
 	}
 	
-	public void advanceMonth(){
+	private void advanceMonth(){
 		month += 1;
 		if(month < 13) return;
 		month = 1;
 		advanceYear();
 	}
 	
-	public void advanceYear(){
+	private void advanceYear(){
+		if(year > 2125) return;
 		year += 1;
 	}
 	
