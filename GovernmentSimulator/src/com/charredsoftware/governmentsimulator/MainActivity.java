@@ -2,6 +2,7 @@ package com.charredsoftware.governmentsimulator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
@@ -24,8 +25,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
+
 import com.charredsoftware.governmentsimulator.legal.Indicators;
 import com.charredsoftware.governmentsimulator.legal.Party;
 import com.charredsoftware.governmentsimulator.legal.State;
@@ -38,7 +39,7 @@ import com.charredsoftware.governmentsimulator.util.Time;
 
 public class MainActivity extends Activity {
 
-	public static GameState state, previous = GameState.LOADING;
+	public static GameState state = GameState.LOADING, previous = GameState.LOADING;
 	private static Board board;
 	private static LinearLayout secondary;
 	private static EditText firstField, lastField;
@@ -48,6 +49,7 @@ public class MainActivity extends Activity {
 	public static StockMarket market;
 	public static Indicators indicators;
 	public static int standardHeight = -1;
+	private static boolean exitDialogOpen = false;
 	
 	@SuppressLint("NewApi")
 	@Override
@@ -58,8 +60,6 @@ public class MainActivity extends Activity {
 	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_main);
 
-		time = new Time();
-		
 		Display display = getWindowManager().getDefaultDisplay();
 		try{
 			Point p = new Point();
@@ -82,8 +82,8 @@ public class MainActivity extends Activity {
 		market = new StockMarket();
 		market.exchanges.add(new StockExchange("United Exchange of America", "UEA"));
 		indicators = new Indicators(true);
-		Controller.loadStocks(board.getContext());
-		Controller.loadPoliticians(board.getContext());
+		
+		if(market.getAllStocks().size() == 0) Controller.newGame(board.getContext());
 		
 		firstField = new EditText(this);
 		firstField.setText("Alexander");
@@ -130,7 +130,7 @@ public class MainActivity extends Activity {
 	    	}
 	    }
 	    
-	    for(FakeButton b : board.buttons){
+	    for(FakeButton b : board.getShownButtons()){
 	    	if(!b.clickInRange(x, y)) continue;
 	    	if(b.text.equals("New Game")){
     			previous = state;
@@ -146,10 +146,11 @@ public class MainActivity extends Activity {
 	    	}else if(b.text.equals("Next Year")){
 	    		for(int i = 1; i <= 4 * 12; i ++) time.advanceWeek();
 	    	}else if(b.text.equals("Exit")){
-	    		if(invokeSave()){
-	    			previous = state;
-	    			state = GameState.HOME;
-	    		}
+	    		if(!exitDialogOpen) invokeSave();
+	    	}else if(b.text.equals("Back")){
+	    		state = previous;
+	    	}else if(b.text.equals("Time")){
+	    		board.toggleSubMenu("Time");
 	    	}
 	    	somethingClicked = true;
 	    	reload();
@@ -185,6 +186,7 @@ public class MainActivity extends Activity {
 		submit.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
+				Controller.newGame(board.getContext());
 				Controller.player = new Politician(firstField.getText().toString(), lastField.getText().toString(), 35, 1000000L, 
 						State.getStateByString(stateField.getSelectedItem().toString()), Party.getPartyByString(partyField.getSelectedItem().toString()));
 				//Toast.makeText(v.getContext(), "Hello, " + Controller.player.firstName + ". You are a " + Controller.player.party.name + " from " + 
@@ -215,8 +217,14 @@ public class MainActivity extends Activity {
 	        	secondary.removeAllViews();
 				reload();
 	            return true;
+        	}else if(state == GameState.MAIN_GAME) {
+        		if(!exitDialogOpen) invokeSave();
+        		return false;
         	}
-        	else if((state == GameState.PAUSED || state == GameState.MAIN_GAME && invokeSave()) || state == GameState.LOAD_GAME || state == GameState.NEW_GAME) {
+        	else if(state == GameState.PAUSED){
+        		previous = state;
+        		state = GameState.MAIN_GAME;
+        	}else if(state == GameState.LOAD_GAME || state == GameState.NEW_GAME) {
 	        	state = GameState.HOME;
 	        	secondary.removeAllViews();
 				reload();
@@ -226,8 +234,7 @@ public class MainActivity extends Activity {
         return super.onKeyUp(keyCode, event);
     }
 	
-    private static boolean exit = false;
-    private boolean invokeSave(){
+    private void invokeSave(){
     	AlertDialog.Builder dBuilder = new AlertDialog.Builder(board.getContext());
     	dBuilder.setTitle("Exit Game");
     	dBuilder
@@ -235,26 +242,32 @@ public class MainActivity extends Activity {
     	.setCancelable(false)
     	.setPositiveButton("Save & Exit", new DialogInterface.OnClickListener(){
 			public void onClick(DialogInterface arg0, int arg1) {
+				exitDialogOpen = false;
 				save();
-				exit = true;
+				previous = GameState.HOME;
+				state = GameState.HOME;
+				reload();
 			}
     	})
     	.setNegativeButton("No Save & Exit", new DialogInterface.OnClickListener(){
 			public void onClick(DialogInterface dialog, int which) {
-				exit = true;
+				exitDialogOpen = false;
+				previous = GameState.HOME;
+				state = GameState.HOME;
+				reload();
 			}
     		
     	})
     	.setNeutralButton("Don't Exit", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-				exit = false;
+				exitDialogOpen = false;
+				//Good game
 			}
 		});
     	
     	AlertDialog alert = dBuilder.create();
-    	alert.show();
-    	
-    	return exit;
+    	if(alert != null) alert.show();
+    	exitDialogOpen = true;
     }
     
     private void save(){

@@ -1,8 +1,8 @@
 package com.charredsoftware.governmentsimulator;
 
+import java.util.ArrayList;
+
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.Paint.Style;
 
 /**
  * @author Joe Boyle <joe@charredgames.com>
@@ -13,8 +13,9 @@ public class FakeButton {
 	public String text;
 	public float x, y;
 	public float height, width, minWidth, maxWidth, textSize;
-	public boolean visible = false;
+	public boolean visible, subMenuOpen, isASubMenu = false;
 	private static Paint paint = new Paint();
+	public ArrayList<FakeButton> subMenu = new ArrayList<FakeButton>();
 	
 	public FakeButton(String text, float textSize, float x, float y, float minWidth, float maxWidth){
 		this.text = text;
@@ -39,6 +40,26 @@ public class FakeButton {
 		if(xP < x || yP < y) return false;
 		if(xP > x + width || yP > y + height) return false;
 		return true;
+	}
+
+	public void addSubButton(String text, float minWidth, float maxWidth){
+		int spacingHeight = (int) ((subMenu.size() == 0) ? 0 : 9);
+		FakeButton subButton = new FakeButton(text, this.textSize, this.x + width + 1, y + (subMenu.size() * (height + spacingHeight)), minWidth, maxWidth);
+		subButton.isASubMenu = true;
+		subMenu.add(subButton);
+	}
+	
+	public void toggleVisibility(boolean val){
+		visible = val;
+		if(!val){
+			//subMenuOpen = false;
+			//toggleSubMenu(false);
+		}
+	}
+	
+	public void toggleSubMenu(boolean val){
+		for(FakeButton b : subMenu) b.toggleVisibility(val);
+		subMenuOpen = val;
 	}
 	
 }

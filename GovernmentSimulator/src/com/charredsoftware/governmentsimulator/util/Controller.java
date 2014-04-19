@@ -39,6 +39,7 @@ public class Controller {
 	public static int height, width;
 	public static ArrayList<FakeButton> homeButtons = new ArrayList<FakeButton>();
 	public static ArrayList<FakeButton> pauseButtons = new ArrayList<FakeButton>();
+	public static ArrayList<FakeButton> stockMenuButtons = new ArrayList<FakeButton>();
 	public static ArrayList<State> states = new ArrayList<State>();
 	public static ArrayList<String> stateNames = new ArrayList<String>();
 	public static ArrayList<Politician> politicians = new ArrayList<Politician>();
@@ -65,6 +66,7 @@ public class Controller {
 		setup();
 	}
 	
+	
 	public static void setup(){
 		if(State.alabama instanceof State);
 		if(NationalIndicator.BIGBUSINESS instanceof NationalIndicator);
@@ -76,10 +78,19 @@ public class Controller {
 		
 		pauseButtons = new ArrayList<FakeButton>();
 		pauseButtons.add(new FakeButton("Stocks", 36, 0, 40, 185, 0));
-		pauseButtons.add(new FakeButton("Next Week", 36, 0, 0 + 95, 185, 0));
-		pauseButtons.add(new FakeButton("Next Month", 36, 0, 0 + 150, 185, 0));
-		pauseButtons.add(new FakeButton("Next Year", 36, 0, 0 + 205, 185, 0));
-		pauseButtons.add(new FakeButton("Exit", 36, 0, 0 + 260, 185, 0));
+		
+		FakeButton time = new FakeButton("Time", 36, 0, 0 + 85, 185, 0);
+		pauseButtons.add(time);
+		time.addSubButton("Next Week", 185, 0);
+		time.addSubButton("Next Month", 185, 0);
+		time.addSubButton("Next Year", 185, 0);
+		
+		pauseButtons.add(new FakeButton("Exit", 36, 0, 0 + 130, 185, 0));
+		
+		stockMenuButtons = new ArrayList<FakeButton>();
+		stockMenuButtons.add(new FakeButton("Back", 36, 10, 10, 185, 0));
+		stockMenuButtons.add(new FakeButton("Next Week", 36, width - 195, 10, 185, 0));
+		
 	}
 	
 	public static void addState(State state){
@@ -108,6 +119,14 @@ public class Controller {
 	         ) + "" + c[iteration]) 
 	        : simpleFormat(d, iteration+1));
 
+	}
+	
+	public static void newGame(Context context){
+		MainActivity.market.exchanges.get(0).stocks = new ArrayList<Stock>();
+		politicians = new ArrayList<Politician>();
+		loadStocks(context);
+		loadPoliticians(context);
+		MainActivity.time = new Time();
 	}
 	
 	public static void loadStocks(Context context){

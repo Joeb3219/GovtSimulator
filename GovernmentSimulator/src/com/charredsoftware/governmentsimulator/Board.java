@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.view.View;
+import android.widget.Toast;
 
 import com.charredsoftware.governmentsimulator.stocks.Stock;
 import com.charredsoftware.governmentsimulator.util.Controller;
@@ -38,7 +39,7 @@ public class Board extends View{
 
 	public void onDraw(Canvas canvas){
 		super.onDraw(canvas);
-		for(FakeButton b : buttons) b.visible = false;
+		for(FakeButton b : buttons) b.toggleVisibility(false);
 		buttons = new ArrayList<FakeButton>();
 		if(hud == null) hud = new QuickHUD(0, getHeight() - 125, 125, getWidth());
 		hud.visible = false;
@@ -85,10 +86,12 @@ public class Board extends View{
 	}
 	
 	private void loadStocks(Canvas canvas){
+		drawButtonSet(canvas, Controller.stockMenuButtons);
 		int xS;
 		int yS = 0;
 		int boxH = 75;
 		int num = 0;
+		yS += 60;
 		for(Stock s : MainActivity.market.getAllStocks()){
 			num ++;
 			xS = 0;
@@ -112,13 +115,20 @@ public class Board extends View{
 	}
 	
 	private void drawButtonSet(Canvas canvas, ArrayList<FakeButton> newButtons){
-		for(FakeButton b : buttons) b.visible = false;
-		buttons = newButtons;
+		for(FakeButton b : buttons) b.toggleVisibility(false);
+		for(FakeButton b : newButtons) {
+			buttons.add(b);
+			if(b.subMenuOpen){
+				for(FakeButton bSub : b.subMenu){
+					if(!buttons.contains(bSub)) buttons.add(bSub);
+				}
+			}
+		}
 		for(FakeButton b : buttons) drawButton(canvas, b);
 	}
 	
 	private void drawButton(Canvas canvas, FakeButton b){
-		b.visible = true;
+		b.toggleVisibility(true);
 		paint.setColor(0xFFA8A8A8);
 		paint.setTextSize(b.textSize);
 		float textWidth = paint.measureText(b.text);
@@ -130,11 +140,30 @@ public class Board extends View{
 		paint.setStyle(Style.STROKE);
 		paint.setColor(0xFF3A3A3B);
 		canvas.drawText(b.text, b.x + ((boxWidth - textWidth) / 2), b.y + b.textSize + 1, paint);
+		
 	}
 	
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		 super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		 setMeasuredDimension(widthMeasureSpec, height);
+	}
+	
+	public void toggleSubMenu(String text){
+		for(FakeButton b : buttons){
+			if(!b.text.equalsIgnoreCase(text)) b.toggleSubMenu(false);
+			b.toggleSubMenu(!b.subMenuOpen);
+		}
+	}
+	
+	public ArrayList<FakeButton> getShownButtons(){
+		ArrayList<FakeButton> allButtons = new ArrayList<FakeButton>();
+		for(FakeButton b : buttons){
+			allButtons.add(b);
+			for(FakeButton bSub : b.subMenu){
+				if(bSub.visible) allButtons.add(bSub);
+			}
+		}
+		return allButtons;
 	}
 	
 }
