@@ -10,6 +10,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -25,8 +27,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.charredsoftware.governmentsimulator.legal.Indicators;
@@ -45,8 +51,9 @@ public class MainActivity extends Activity {
 	public static GameState state = GameState.LOADING, previous = GameState.LOADING;
 	private static Board board;
 	private static LinearLayout secondary;
-	private static EditText firstField, lastField;
+	private static EditText firstField, lastField, stockQuantityText, stockValueText;
 	private static Spinner stateField, partyField;
+	private static SeekBar stockQuantityBar;
 	public static Time time;
 	private static long lastClick = 0;
 	public static StockMarket market;
@@ -56,6 +63,7 @@ public class MainActivity extends Activity {
 	private static float touchDownX, touchDownY;
 	private final static float TOUCH_THRESHHOLD = 10;
 	private static boolean isOnClick = false;
+	private boolean updatingValues = false;
 	
 	@SuppressLint("NewApi")
 	@Override
@@ -90,6 +98,76 @@ public class MainActivity extends Activity {
 		indicators = new Indicators(true);
 		
 		if(market.getAllStocks().size() == 0) Controller.newGame(board.getContext());
+		
+		stockQuantityBar = new SeekBar(this);
+		stockQuantityBar.setProgress(1);
+		stockQuantityText = new EditText(this);
+		stockQuantityText.setText(1 + "");
+		stockValueText = new EditText(this);
+		stockValueText.setText(1 + "");
+		stockQuantityBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			public void onStopTrackingTouch(SeekBar seekBar) {}
+			public void onStartTrackingTouch(SeekBar seekBar) {}
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+				if(updatingValues) return;
+				updatingValues = true;				
+				stockQuantityText.setText(progress + "");
+				stockValueText.setText(Controller.selectedStock.calculateValue(progress) / 100 + "");
+				updatingValues = false;
+			}
+		});
+		stockQuantityText.addTextChangedListener(new TextWatcher(){
+			public void afterTextChanged(Editable s) {
+				if(updatingValues) return;
+				updatingValues = true;
+				int shares = 0;
+				try{
+					int a = Integer.parseInt(s.toString());
+					shares = a; 
+				}catch(Exception e){
+					
+				}
+				shares = (shares > stockQuantityBar.getMax()) ? stockQuantityBar.getMax() : shares;
+				shares = (shares < 0) ? 0 : shares;
+				stockQuantityText.setText(shares + "");
+				stockQuantityBar.setProgress(shares);
+				stockValueText.setText("" + Controller.selectedStock.calculateValue(shares) / 100);
+				updatingValues = false;
+			}
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				
+			}
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				
+			}
+		});
+		stockValueText.addTextChangedListener(new TextWatcher(){
+			public void afterTextChanged(Editable s) {
+				if(updatingValues) return;
+				updatingValues = true;			
+				int value = 0;
+				try{
+					int a = Integer.parseInt(s.toString());
+					value = a; 
+				}catch(Exception e){
+					
+				}
+				value = (int) ((value * 100 > Controller.selectedStock.calculateValue(stockQuantityBar.getMax())) ? Controller.selectedStock.calculateValue(stockQuantityBar.getMax()) : value);
+				value = (value < 0) ? 0 : value;
+				int shares = Controller.selectedStock.calculateShares(value);
+				stockValueText.setText(value + "");
+				stockQuantityBar.setProgress(shares);
+				stockQuantityText.setText(shares + "");
+				updatingValues = false;
+			}
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				
+			}
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				
+			}
+		});
+		
 		
 		firstField = new EditText(this);
 		firstField.setText("Alexander");
@@ -192,8 +270,10 @@ public class MainActivity extends Activity {
 	    		board.toggleSubMenu("Time");
 	    	}else if(b.text.equals("Buy Stock")){
 	    		state = GameState.STOCKS_BUY;
+	    		loadStockTransactionSecondary(true);
 	    	}else if(b.text.equals("Sell Stock")){
 	    		state = GameState.STOCKS_SELL;
+	    		loadStockTransactionSecondary(false);
 	    	}
 	    	somethingClicked = true;
 	    	reload();
@@ -232,14 +312,73 @@ public class MainActivity extends Activity {
 				Controller.newGame(board.getContext());
 				Controller.player = new Politician(firstField.getText().toString(), lastField.getText().toString(), 35, 1000000L, 
 						State.getStateByString(stateField.getSelectedItem().toString()), Party.getPartyByString(partyField.getSelectedItem().toString()));
-				//Toast.makeText(v.getContext(), "Hello, " + Controller.player.firstName + ". You are a " + Controller.player.party.name + " from " + 
-				//		Controller.player.state.name + ". You have " + Controller.player.getMoneyString(), Toast.LENGTH_LONG).show();
 				state = GameState.MAIN_GAME;
-				secondary.removeAllViews();
+        		secondary.removeAllViews();
 				reload();
 			}
 		});
 	}
+	
+	private void loadStockTransactionSecondary(final boolean buying){
+		if(Controller.selectedStock == null) return;
+		secondary.removeAllViews();
+		secondary.setY(50);
+		if(buying) stockQuantityBar.setMax(Controller.selectedStock.calculateMaxShares());
+		else stockQuantityBar.setMax(Controller.selectedStock.owned);
+		
+		stockQuantityBar.setProgress(1);
+		stockQuantityText.setText(1 + "");
+		stockValueText.setText(1 + "");
+		Button submit = new Button(this);
+		submit.setText("Confirm");
+
+		TextView v = new TextView(this);
+		v.setText("Quantity: ");
+		
+		final LinearLayout quantityGroup = new LinearLayout(this);
+		quantityGroup.setOrientation(LinearLayout.HORIZONTAL);
+		quantityGroup.addView(v);
+		quantityGroup.addView(stockQuantityText);
+		
+		secondary.addView(stockQuantityBar, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		secondary.addView(quantityGroup, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		
+		v = new TextView(this);
+		v.setText("Value: $");
+		final LinearLayout valueGroup = new LinearLayout(this);
+		valueGroup.setOrientation(LinearLayout.HORIZONTAL);
+		valueGroup.addView(v);
+		valueGroup.addView(stockValueText);
+		
+		secondary.addView(valueGroup, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		secondary.addView(submit, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		
+		submit.setOnClickListener(new OnClickListener(){
+			public void onClick(View v) {
+				if(buying){
+					if(Controller.selectedStock.calculateMaxShares() < stockQuantityBar.getProgress()) Toast.makeText(board.getContext(), "You cannot afford this many shares.", Toast.LENGTH_LONG).show();
+					else {
+						Controller.selectedStock.purchase(stockQuantityBar.getProgress());
+						Toast.makeText(board.getContext(), stockQuantityBar.getProgress() + " shares of " + Controller.selectedStock.symbol + " purchased for " + 
+								Controller.convertLongToMoney(Controller.selectedStock.calculateValue(stockQuantityBar.getProgress()), false), Toast.LENGTH_LONG).show();
+						emptyLinearLayout(secondary);
+						state = GameState.STOCKS;
+						reload();
+					}
+				}else{
+					if(Controller.selectedStock.owned < stockQuantityBar.getProgress()) Toast.makeText(board.getContext(), "You don't this many shares.", Toast.LENGTH_LONG).show();
+					else{
+						Controller.selectedStock.sell(stockQuantityBar.getProgress());
+						Toast.makeText(board.getContext(), stockQuantityBar.getProgress() + " shares of " + Controller.selectedStock.symbol + " sold for " + 
+								Controller.convertLongToMoney(Controller.selectedStock.calculateValue(stockQuantityBar.getProgress()), false), Toast.LENGTH_LONG).show();
+						emptyLinearLayout(secondary);
+						state = GameState.STOCKS;
+						reload();
+					}
+				}
+			}
+		});
+	}	
 	
 	private void reload(){
 		board.changed = true;
@@ -258,13 +397,17 @@ public class MainActivity extends Activity {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
         	if(state == GameState.STOCKS){
         		state = GameState.MAIN_GAME;
-	        	secondary.removeAllViews();
+        		secondary.removeAllViews();
 				reload();
 	            return true;
+        	}else if(state == GameState.STOCKS_BUY || state == GameState.STOCKS_SELL){
+        		state = GameState.STOCKS_SPECIFIC;
+				emptyLinearLayout(secondary);
+        		reload();
+        		return true;
         	}else if(state == GameState.STOCKS_SPECIFIC){
         		state = GameState.STOCKS;
         		Controller.selectedStock = null;
-        		secondary.removeAllViews();
         		reload();
         		return true;
         	} else if(state == GameState.MAIN_GAME) {
@@ -274,12 +417,13 @@ public class MainActivity extends Activity {
         	else if(state == GameState.PAUSED){
         		previous = state;
         		state = GameState.MAIN_GAME;
+        		return true;
         	}else if(state == GameState.LOAD_GAME || state == GameState.NEW_GAME) {
 	        	state = GameState.HOME;
-	        	secondary.removeAllViews();
+        		secondary.removeAllViews();
 				reload();
 	            return true;
-        	}else return true;
+        	}else return false;
         }
         return super.onKeyUp(keyCode, event);
     }
@@ -322,6 +466,16 @@ public class MainActivity extends Activity {
     
     private void save(){
     	
+    }
+    
+    public void emptyLinearLayout(LinearLayout layout){
+        for(int x = 0; x < layout.getChildCount(); x ++ ){
+            if(layout.getChildAt(x) instanceof LinearLayout){
+                LinearLayout layoutInner = (LinearLayout) layout.getChildAt(x);
+                layoutInner.removeAllViewsInLayout();
+            }
+        }
+        layout.removeAllViewsInLayout();
     }
     
 }

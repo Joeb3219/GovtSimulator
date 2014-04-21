@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.view.View;
-import android.widget.Toast;
 
 import com.charredsoftware.governmentsimulator.stocks.Stock;
 import com.charredsoftware.governmentsimulator.util.Controller;
@@ -51,6 +50,7 @@ public class Board extends View{
 			if(Controller.selectedStock == null) loadStocks(canvas);
 			else loadStockPage(canvas);
 		}
+		if(MainActivity.state == GameState.STOCKS_BUY || MainActivity.state == GameState.STOCKS_SELL) loadStocksTransaction(canvas); 
 		
 		if(changed) {
 			this.requestLayout();
@@ -147,6 +147,14 @@ public class Board extends View{
 		}
 		
 		height = (gBoxY + gBoxHeight > standardHeight) ? (gBoxY + gBoxHeight) : standardHeight;
+	}
+	
+	private void loadStocksTransaction(Canvas canvas){
+		height = standardHeight;
+		paint.setTextSize(36);
+		paint.setColor(0xff000000);
+		String header = Controller.selectedStock.name + " (" + Controller.convertLongToMoney(Controller.selectedStock.price,  false) + "/s)";
+		canvas.drawText(header, (getWidth() - paint.measureText(header)) / 2, 40, paint);
 	}
 	
 	private void drawButtonSet(Canvas canvas, ArrayList<FakeButton> newButtons){

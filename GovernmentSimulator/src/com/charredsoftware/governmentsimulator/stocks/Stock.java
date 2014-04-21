@@ -87,6 +87,10 @@ public class Stock {
 		return (int) (Controller.player.money / price);
 	}
 	
+	public int calculateShares(long value){
+		return (int) (value / price);
+	}
+	
 	public long calculateValue(int shares){
 		return price * shares;
 	}
