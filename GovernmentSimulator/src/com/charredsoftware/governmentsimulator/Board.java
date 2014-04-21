@@ -47,6 +47,10 @@ public class Board extends View{
 		if(MainActivity.state == GameState.MAIN_GAME) loadMainGame(canvas);
 		if(MainActivity.state == GameState.PAUSED) loadPaused(canvas);
 		if(MainActivity.state == GameState.STOCKS) loadStocks(canvas);
+		if(MainActivity.state == GameState.STOCKS_SPECIFIC){
+			if(Controller.selectedStock == null) loadStocks(canvas);
+			else loadStockPage(canvas);
+		}
 		
 		if(changed) {
 			this.requestLayout();
@@ -102,16 +106,47 @@ public class Board extends View{
 			paint.setStyle(Style.STROKE);
 			paint.setColor(0xFF000000);
 			paint.setTextSize(24);
-			canvas.drawText(s.symbol + ": " + Controller.convertLongToMoney(s.price) + " (" + Controller.convertLongToMoney(s.weekChange()) + ")", xS + 5, yS + 30, paint);
-			canvas.drawText("52-high: " + Controller.convertLongToMoney(s.get52High()) + ", 52-low: " + Controller.convertLongToMoney(s.get52Low()), xS + 5, yS + 60, paint);
+			canvas.drawText(s.symbol + ": " + Controller.convertLongToMoney(s.price, false) + " (" + Controller.convertLongToMoney(s.weekChange(), true) + ")", xS + 5, yS + 30, paint);
+			canvas.drawText("52-high: " + Controller.convertLongToMoney(s.get52High(), false) + ", 52-low: " + Controller.convertLongToMoney(s.get52Low(), false), xS + 5, yS + 60, paint);
 			
 			yS += boxH;
 			height = (yS > standardHeight) ? yS : height;
 		}
 	}
 	
-	private void loadStockPage(Canvas canvas, Stock stock){
+	private void loadStockPage(Canvas canvas){
+		drawButtonSet(canvas, Controller.stockButtons);
+		Stock stock = Controller.selectedStock;
+		paint.setColor(0xFF000000);
+		paint.setTextSize(36);
+		String header = stock.name + " (" + stock.symbol + ")";
+		canvas.drawText(header, (getWidth() - paint.measureText(header)) / 2, 40, paint);
 		
+		paint.setTextSize(24);
+		canvas.drawText(Controller.convertLongToMoney(stock.price, false) + " @ " + stock.exchange.symbol, 5, 75, paint);
+		canvas.drawText("1 week change: " + Controller.convertLongToMoney(stock.weekChange(), true), 5, 100, paint);
+		canvas.drawText("52-high: " + Controller.convertLongToMoney(stock.get52High(), false) + ", 52-low: " + Controller.convertLongToMoney(stock.get52Low(), false), 5, 125, paint);
+		canvas.drawText("Shares Owned: " + stock.owned + " (" + Controller.convertLongToMoney(stock.calculateValue(stock.owned), false) + ")", 5, 150, paint);
+		
+		int gBoxX = 10;
+		int gBoxY = 200;
+		int gBoxHeight = 400;
+		int gBoxWidth = getWidth() - 20;
+		
+		paint.setTextSize(30);
+		String graphTitle = stock.prices.size() + " Week Prices";
+		canvas.drawText(graphTitle, (getWidth() - paint.measureText(graphTitle)) / 2, gBoxY - 10, paint);
+		
+		paint.setColor(0xffC9001B);
+		canvas.drawRect(gBoxX, gBoxY, gBoxX + gBoxWidth, gBoxY + gBoxHeight, paint);
+		
+		paint.setColor(0xff000000);
+		int segmentSize = (stock.prices.size() == 0) ? gBoxWidth : ((int) gBoxWidth / stock.prices.size());
+		for(int x = gBoxX + segmentSize; x < (gBoxWidth + gBoxX); x += segmentSize){
+			canvas.drawLine(x, gBoxY, x, gBoxY + gBoxHeight, paint);
+		}
+		
+		height = (gBoxY + gBoxHeight > standardHeight) ? (gBoxY + gBoxHeight) : standardHeight;
 	}
 	
 	private void drawButtonSet(Canvas canvas, ArrayList<FakeButton> newButtons){

@@ -25,12 +25,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.charredsoftware.governmentsimulator.legal.Indicators;
 import com.charredsoftware.governmentsimulator.legal.Party;
 import com.charredsoftware.governmentsimulator.legal.State;
 import com.charredsoftware.governmentsimulator.people.Politician;
+import com.charredsoftware.governmentsimulator.stocks.Stock;
 import com.charredsoftware.governmentsimulator.stocks.StockExchange;
 import com.charredsoftware.governmentsimulator.stocks.StockMarket;
 import com.charredsoftware.governmentsimulator.util.Controller;
@@ -50,6 +53,9 @@ public class MainActivity extends Activity {
 	public static Indicators indicators;
 	public static int standardHeight = -1;
 	private static boolean exitDialogOpen = false;
+	private static float touchDownX, touchDownY;
+	private final static float TOUCH_THRESHHOLD = 10;
+	private static boolean isOnClick = false;
 	
 	@SuppressLint("NewApi")
 	@Override
@@ -114,13 +120,46 @@ public class MainActivity extends Activity {
 	}
 
 	public boolean touch(MotionEvent event) {
-		long nano = System.nanoTime();
-	    float x = event.getX();
-	    float y = event.getY();
-	    boolean somethingClicked = false;
+		switch (event.getAction() & MotionEvent.ACTION_MASK) {
+	        case MotionEvent.ACTION_DOWN:
+	            touchDownX = event.getX();
+	            touchDownY = event.getY();
+	            isOnClick = true;
+	            break;
+	        case MotionEvent.ACTION_CANCEL:
+	        case MotionEvent.ACTION_UP:
+	            if (isOnClick && ((System.nanoTime() / 1000000) - event.getDownTime()) > 60) return executeTouchChecks(event);
+	            break;
+	        case MotionEvent.ACTION_MOVE:
+	            if (isOnClick && (Math.abs(touchDownX - event.getX()) > TOUCH_THRESHHOLD || Math.abs(touchDownY - event.getY()) > TOUCH_THRESHHOLD)) {
+	                isOnClick = false;
+	            }
+	            break;
+	        default:
+	        	break;
+		}	
 	    
-	    if(nano - lastClick < 250000000) return false;
+	    return true;
+	}
+	
+	private boolean executeTouchChecks(MotionEvent event){
+		long nano = System.nanoTime();
+		float x = event.getX();
+		float y = event.getY();
+		boolean somethingClicked = false;
+
+		if(nano - lastClick < 250000000) return false;
 	    lastClick = nano;
+	    
+	    if(state == GameState.STOCKS){
+	    	if(y >= 60){
+	    		ArrayList<Stock> stocks = market.getAllStocks();
+	    		int index = (int) ((y - 60) / 75);
+	    		Controller.selectedStock = stocks.get(index);
+	    		state = GameState.STOCKS_SPECIFIC;
+	    		reload();
+	    	}
+	    }
 	    
 	    if(board.hud.clickInRange(x, y)){
 	    	if(state == GameState.MAIN_GAME){
@@ -151,6 +190,10 @@ public class MainActivity extends Activity {
 	    		state = previous;
 	    	}else if(b.text.equals("Time")){
 	    		board.toggleSubMenu("Time");
+	    	}else if(b.text.equals("Buy Stock")){
+	    		state = GameState.STOCKS_BUY;
+	    	}else if(b.text.equals("Sell Stock")){
+	    		state = GameState.STOCKS_SELL;
 	    	}
 	    	somethingClicked = true;
 	    	reload();
@@ -207,6 +250,7 @@ public class MainActivity extends Activity {
     	f.addView(board);
     	f.addView(secondary);
     	f.invalidate();
+    	((ScrollView) findViewById(R.id.scroll)).scrollTo(0, 0);
     	
 	}
 	
@@ -217,7 +261,13 @@ public class MainActivity extends Activity {
 	        	secondary.removeAllViews();
 				reload();
 	            return true;
-        	}else if(state == GameState.MAIN_GAME) {
+        	}else if(state == GameState.STOCKS_SPECIFIC){
+        		state = GameState.STOCKS;
+        		Controller.selectedStock = null;
+        		secondary.removeAllViews();
+        		reload();
+        		return true;
+        	} else if(state == GameState.MAIN_GAME) {
         		if(!exitDialogOpen) invokeSave();
         		return false;
         	}

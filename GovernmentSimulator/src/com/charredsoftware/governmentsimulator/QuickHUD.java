@@ -70,16 +70,16 @@ public class QuickHUD {
 		
 		Stock s = stocks.get(0);
 		paint.setColor((s.weekChange() >= 0) ? 0xFF42EB6F : 0xFFFF4242);
-		canvas.drawText(s.symbol + ": " + Controller.convertLongToMoney(s.price), x + 5, y + 30, paint);
+		canvas.drawText(s.symbol + ": " + Controller.convertLongToMoney(s.price, false), x + 5, y + 30, paint);
 		s = stocks.get(1);
 		paint.setColor((s.weekChange() >= 0) ? 0xFF42EB6F : 0xFFFF4242);
-		canvas.drawText(s.symbol + ": " + Controller.convertLongToMoney(s.price), x + 5, y + 70, paint);
+		canvas.drawText(s.symbol + ": " + Controller.convertLongToMoney(s.price, false), x + 5, y + 70, paint);
 		s = stocks.get(2);
 		paint.setColor((s.weekChange() >= 0) ? 0xFF42EB6F : 0xFFFF4242);
-		canvas.drawText(s.symbol + ": " + Controller.convertLongToMoney(s.price), x + 200, y + 30, paint);
+		canvas.drawText(s.symbol + ": " + Controller.convertLongToMoney(s.price, false), x + 200, y + 30, paint);
 		s = stocks.get(3);
 		paint.setColor((s.weekChange() >= 0) ? 0xFF42EB6F : 0xFFFF4242);
-		canvas.drawText(s.symbol + ": " + Controller.convertLongToMoney(s.price), x + 200, y + 70, paint);
+		canvas.drawText(s.symbol + ": " + Controller.convertLongToMoney(s.price, false), x + 200, y + 70, paint);
 	}
 	
 }

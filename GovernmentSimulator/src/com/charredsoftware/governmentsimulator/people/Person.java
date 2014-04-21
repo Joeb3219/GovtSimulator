@@ -32,7 +32,7 @@ public class Person {
 	}
 	
 	public void alterBalance(double val){
-		money -= val * 100.00;
+		money += val * 100.00;
 	}
 	
 	public double getMoney(){

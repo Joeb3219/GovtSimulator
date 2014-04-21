@@ -36,4 +36,13 @@ public class StockMarket {
 		return stocks;
 	}
 	
+	public Stock getStockByName(String name){
+		for(StockExchange exchange : exchanges){
+			for(Stock s : exchange.stocks){
+				if(s.name.toLowerCase().equals(name)) return s;
+			}
+		}
+		return null;
+	}
+	
 }

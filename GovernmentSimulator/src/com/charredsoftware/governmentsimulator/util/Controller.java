@@ -40,11 +40,13 @@ public class Controller {
 	public static ArrayList<FakeButton> homeButtons = new ArrayList<FakeButton>();
 	public static ArrayList<FakeButton> pauseButtons = new ArrayList<FakeButton>();
 	public static ArrayList<FakeButton> stockMenuButtons = new ArrayList<FakeButton>();
+	public static ArrayList<FakeButton> stockButtons = new ArrayList<FakeButton>();
 	public static ArrayList<State> states = new ArrayList<State>();
 	public static ArrayList<String> stateNames = new ArrayList<String>();
 	public static ArrayList<Politician> politicians = new ArrayList<Politician>();
 	public static ArrayList<NationalIndicator> indicators = new ArrayList<NationalIndicator>();
 	public static Politician player;
+	public static Stock selectedStock = null;
 	
 	@SuppressLint("NewApi")
 	public static void reset(View view){
@@ -91,6 +93,10 @@ public class Controller {
 		stockMenuButtons.add(new FakeButton("Back", 36, 10, 10, 185, 0));
 		stockMenuButtons.add(new FakeButton("Next Week", 36, width - 195, 10, 185, 0));
 		
+		stockButtons = new ArrayList<FakeButton>();
+		stockButtons.add(new FakeButton("Buy Stock", 38, 15, height - 100, 185, 0));
+		stockButtons.add(new FakeButton("Sell Stock", 38, width - 200, height - 100, 185, 0));
+		
 	}
 	
 	public static void addState(State state){
@@ -98,13 +104,14 @@ public class Controller {
 		stateNames.add(state.name);
 	}
 	
-	public static String convertLongToMoney(long l){
+	public static String convertLongToMoney(long l, boolean showSigns){
 		DecimalFormat f = new DecimalFormat("#,##0.00");
-		String sign = "+";
-		if(l < 0) sign = "-";
-		if(l == 0) sign = "";
+		String sign = "";
+		if(showSigns && l < 0) sign = "-";
+		if(showSigns && l > 0) sign = "+";
 		return sign + "$" + f.format(Math.abs(l / 100.00));
 	}
+	
 	
 	//simpleFormat code borrowed from StackOverflow user @Elijah Saounkine
 	

@@ -97,14 +97,13 @@
     
     <stock>
         <exchange>UEA</exchange>
-        <name>Fort Cars</name>
-        <symbol>FORT</symbol>
-        <price>2243</price>
+        <name>Pixel Animation</name>
+        <symbol>PIX</symbol>
+        <price>1500</price>
         <dividend>00</dividend>
         <factors>
-            <factor name = "transportation" influence = "80" ideal = "100"/>
-            <factor name = "energy" influence = "10" ideal = "100"/>
-            <factor name = "economy" influence = "10" ideal = "100"/>
+            <factor name = "economy" influence = "20" ideal = "100"/>
+            <factor name = "technology" influence = "10" ideal = "100"/>
         </factors>
     </stock>
     
@@ -123,14 +122,14 @@
     
     <stock>
         <exchange>UEA</exchange>
-        <name>Fort Cars</name>
-        <symbol>FORT</symbol>
-        <price>2243</price>
+        <name>Stem Cell Discoveries</name>
+        <symbol>SCD</symbol>
+        <price>19943</price>
         <dividend>00</dividend>
         <factors>
-            <factor name = "transportation" influence = "80" ideal = "100"/>
-            <factor name = "energy" influence = "10" ideal = "100"/>
-            <factor name = "economy" influence = "10" ideal = "100"/>
+            <factor name = "science" influence = "40" ideal = "100"/>
+            <factor name = "technology" influence = "35" ideal = "100"/>
+            <factor name = "healthcare" influence = "35" ideal = "100"/>
         </factors>
     </stock>
     
@@ -149,53 +148,51 @@
     
     <stock>
         <exchange>UEA</exchange>
-        <name>Fort Cars</name>
-        <symbol>FORT</symbol>
-        <price>2243</price>
+        <name>Standard Electric</name>
+        <symbol>ELE</symbol>
+        <price>3276</price>
         <dividend>00</dividend>
         <factors>
-            <factor name = "transportation" influence = "80" ideal = "100"/>
-            <factor name = "energy" influence = "10" ideal = "100"/>
-            <factor name = "economy" influence = "10" ideal = "100"/>
+            <factor name = "utilities" influence = "60" ideal = "100"/>
+            <factor name = "technology" influence = "10" ideal = "100"/>
         </factors>
     </stock>
     
     <stock>
         <exchange>UEA</exchange>
-        <name>Fort Cars</name>
-        <symbol>FORT</symbol>
-        <price>2243</price>
+        <name>Netcast Cable</name>
+        <symbol>NCC</symbol>
+        <price>4534</price>
         <dividend>00</dividend>
         <factors>
-            <factor name = "transportation" influence = "80" ideal = "100"/>
-            <factor name = "energy" influence = "10" ideal = "100"/>
-            <factor name = "economy" influence = "10" ideal = "100"/>
+            <factor name = "utilities" influence = "40" ideal = "100"/>
+            <factor name = "communications" influence = "25" ideal = "100"/>
+            <factor name = "economy" influence = "20" ideal = "100"/>
+            <factor name = "technology" influence = "15" ideal = "100"/>
         </factors>
     </stock>
     
     <stock>
         <exchange>UEA</exchange>
-        <name>Fort Cars</name>
-        <symbol>FORT</symbol>
-        <price>2243</price>
+        <name>School Supply Service</name>
+        <symbol>SSS</symbol>
+        <price>1245</price>
         <dividend>00</dividend>
         <factors>
-            <factor name = "transportation" influence = "80" ideal = "100"/>
-            <factor name = "energy" influence = "10" ideal = "100"/>
-            <factor name = "economy" influence = "10" ideal = "100"/>
+            <factor name = "education" influence = "80" ideal = "100"/>
         </factors>
     </stock>
     
     <stock>
         <exchange>UEA</exchange>
-        <name>Fort Cars</name>
-        <symbol>FORT</symbol>
-        <price>2243</price>
+        <name>Rabbit Labratories</name>
+        <symbol>RLAB</symbol>
+        <price>4922</price>
         <dividend>00</dividend>
         <factors>
-            <factor name = "transportation" influence = "80" ideal = "100"/>
-            <factor name = "energy" influence = "10" ideal = "100"/>
-            <factor name = "economy" influence = "10" ideal = "100"/>
+            <factor name = "science" influence = "80" ideal = "100"/>
+            <factor name = "healthcare" influence = "10" ideal = "100"/>
+            <factor name = "environment" influence = "10" ideal = "40"/>
         </factors>
     </stock>
     

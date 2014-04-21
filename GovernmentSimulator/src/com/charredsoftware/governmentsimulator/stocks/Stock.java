@@ -22,6 +22,7 @@ public class Stock {
 	public StockExchange exchange;
 	public Random rand = new Random();
 	public Indicators indicators;
+	public int owned = 0;
 	
 	public Stock(StockExchange exchange, String name, String symbol, long price){
 		this.name = name;
@@ -80,6 +81,26 @@ public class Stock {
 	public long weekChange(){
 		if(prices.size() < 2) return 0;
 		return price - prices.get(prices.size() - 2);
+	}
+	
+	public int calculateMaxShares(){
+		return (int) (Controller.player.money / price);
+	}
+	
+	public long calculateValue(int shares){
+		return price * shares;
+	}
+	
+	public void purchase(int shares){
+		if(Controller.player.money < calculateValue(shares)) return;
+		Controller.player.money -= (shares * price);
+		this.owned += shares;
+	}
+	
+	public void sell(int shares){
+		if(owned < shares) return;
+		Controller.player.money += (shares * price);
+		owned -= shares;
 	}
 	
 }
