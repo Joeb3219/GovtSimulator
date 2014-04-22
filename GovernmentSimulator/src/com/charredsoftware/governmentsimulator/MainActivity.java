@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.Display;
 import android.view.Gravity;
@@ -102,8 +103,10 @@ public class MainActivity extends Activity {
 		stockQuantityBar = new SeekBar(this);
 		stockQuantityBar.setProgress(1);
 		stockQuantityText = new EditText(this);
+		stockQuantityText.setInputType(InputType.TYPE_CLASS_NUMBER);
 		stockQuantityText.setText(1 + "");
 		stockValueText = new EditText(this);
+		stockValueText.setInputType(InputType.TYPE_CLASS_NUMBER);
 		stockValueText.setText(1 + "");
 		stockQuantityBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			public void onStopTrackingTouch(SeekBar seekBar) {}
@@ -296,6 +299,7 @@ public class MainActivity extends Activity {
 	}
 
 	private void loadNewGameSecondary(){
+		secondary.setY(0);
 		secondary.removeAllViews();
 		secondary.addView(firstField, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		secondary.addView(lastField, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
