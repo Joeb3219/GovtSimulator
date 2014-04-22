@@ -106,7 +106,7 @@ public class Board extends View{
 			paint.setStyle(Style.STROKE);
 			paint.setColor(0xFF000000);
 			paint.setTextSize(24);
-			canvas.drawText(s.symbol + ": " + Controller.convertLongToMoney(s.price, false) + " (" + Controller.convertLongToMoney(s.weekChange(), true) + ")", xS + 5, yS + 30, paint);
+			canvas.drawText(s.name + " (" + s.symbol + ")" + ": " + Controller.convertLongToMoney(s.price, false) + " (" + Controller.convertLongToMoney(s.weekChange(), true) + ")", xS + 5, yS + 30, paint);
 			canvas.drawText("52-high: " + Controller.convertLongToMoney(s.get52High(), false) + ", 52-low: " + Controller.convertLongToMoney(s.get52Low(), false), xS + 5, yS + 60, paint);
 			
 			yS += boxH;
