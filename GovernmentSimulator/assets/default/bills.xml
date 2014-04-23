@@ -1,0 +1,17 @@
+<?xml version = "1.0" ?>
+
+<bills>
+    
+    <bill>
+        <name>Clean Air Act</name>
+        <description>Provisions </description>
+        <cost frequency = "4"></cost>
+        <triggers>
+            <factor name = "" influence = "" value = ""/>
+        </triggers>
+        <impact>
+            <factor name = "" value = ""/>
+        </impact>
+    </bill>
+    
+</bills>
