@@ -4,13 +4,15 @@
     
     <bill>
         <name>Clean Air Act</name>
-        <description>Provisions </description>
-        <cost frequency = "4"></cost>
+        <description>Create an agency which will force businesses to comply with new air pollution regulations.</description>
+        <cost frequency = "4">100000</cost>
         <triggers>
-            <factor name = "" influence = "" value = ""/>
+            <factor name = "environment" influence = "100" value = "25"/>
         </triggers>
         <impact>
-            <factor name = "" value = ""/>
+            <factor name = "environment" value = "6"/>
+            <factor name = "bigbusiness" value = "-5"/>
+            <factor name = "smallbusiness" value = "-1"/>
         </impact>
     </bill>
     
