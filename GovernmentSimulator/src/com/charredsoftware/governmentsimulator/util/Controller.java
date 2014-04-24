@@ -24,6 +24,9 @@ import android.view.WindowManager;
 
 import com.charredsoftware.governmentsimulator.FakeButton;
 import com.charredsoftware.governmentsimulator.MainActivity;
+import com.charredsoftware.governmentsimulator.legal.Bill;
+import com.charredsoftware.governmentsimulator.legal.BillLineup;
+import com.charredsoftware.governmentsimulator.legal.Indicators;
 import com.charredsoftware.governmentsimulator.legal.NationalIndicator;
 import com.charredsoftware.governmentsimulator.legal.State;
 import com.charredsoftware.governmentsimulator.people.Politician;
@@ -37,6 +40,7 @@ import com.charredsoftware.governmentsimulator.stocks.Stock;
 public class Controller {
 
 	public static int height, width;
+	public static ArrayList<Bill> bills = new ArrayList<Bill>();
 	public static ArrayList<FakeButton> homeButtons = new ArrayList<FakeButton>();
 	public static ArrayList<FakeButton> pauseButtons = new ArrayList<FakeButton>();
 	public static ArrayList<FakeButton> stockMenuButtons = new ArrayList<FakeButton>();
@@ -132,7 +136,9 @@ public class Controller {
 		MainActivity.market.exchanges.get(0).stocks = new ArrayList<Stock>();
 		politicians = new ArrayList<Politician>();
 		loadStocks(context);
+		loadBills(context);
 		loadPoliticians(context);
+		MainActivity.lineup = new BillLineup(bills, MainActivity.indicators);
 		MainActivity.time = new Time();
 	}
 	
@@ -159,6 +165,52 @@ public class Controller {
 					stock.indicators.setInfluence(ind, Integer.parseInt(factors.get(a).getAttributeValue("influence")));
 					stock.indicators.setLevel(ind, Integer.parseInt(factors.get(a).getAttributeValue("ideal")));
 				}
+			}
+		  } catch (IOException e) {e.printStackTrace();} catch (JDOMException e) {e.printStackTrace();  }} catch (IOException e1) {
+			e1.printStackTrace();
+		}finally{
+			if(xmlFile != null) xmlFile.delete();
+		}
+	}
+	
+	public static void loadBills(Context context){
+		AssetManager assets = context.getAssets();
+		SAXBuilder builder = new SAXBuilder();
+		File xmlFile = null;
+		try {
+			xmlFile = getFileFromStream(context, "bills", assets.open("default/bills.xml"));
+			
+		try {
+			Document document = (Document) builder.build(xmlFile);
+			Element rootNode = document.getRootElement();
+			
+			List<Element> list = rootNode.getChildren("bill");
+			for (int i = 0; i < list.size(); i++) {				
+				Element e = (Element) list.get(i);
+				
+				Indicators triggers = new Indicators(false);
+				Indicators impact = new Indicators(false);
+				
+				List<Element> triggs = e.getChild("triggers").getChildren("factor");
+				for(int a = 0; a < triggs.size(); a ++){
+					Element t = triggs.get(a);
+					NationalIndicator indicator = NationalIndicator.getIndicatorByString(t.getAttributeValue("name"));
+					triggers.setInfluence(indicator, Integer.parseInt(t.getAttributeValue("influence")));
+					triggers.setLevel(indicator, Integer.parseInt(t.getAttributeValue("value")));
+				}
+				
+				List<Element> imps = e.getChild("impact").getChildren("factor");
+				for(int a = 0; a < imps.size(); a ++){
+					Element t = imps.get(a);
+					NationalIndicator indicator = NationalIndicator.getIndicatorByString(t.getAttributeValue("name"));
+					impact.setLevel(indicator, Integer.parseInt(t.getAttributeValue("value")));
+				}
+				
+				Bill bill = new Bill(
+						e.getChildText("name"), e.getChildText("description"),
+						Long.parseLong(e.getChildText("cost")),Integer.parseInt(e.getChild("cost").getAttributeValue("frequency")),
+						triggers, impact);
+				
 			}
 		  } catch (IOException e) {e.printStackTrace();} catch (JDOMException e) {e.printStackTrace();  }} catch (IOException e1) {
 			e1.printStackTrace();

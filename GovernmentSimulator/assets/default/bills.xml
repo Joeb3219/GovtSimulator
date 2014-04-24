@@ -5,7 +5,7 @@
     <bill>
         <name>Clean Air Act</name>
         <description>Create an agency which will force businesses to comply with new air pollution regulations.</description>
-        <cost frequency = "4">100000</cost>
+        <cost frequency = "4">10000000</cost>
         <triggers>
             <factor name = "environment" influence = "100" value = "25"/>
         </triggers>
@@ -15,5 +15,175 @@
             <factor name = "smallbusiness" value = "-1"/>
         </impact>
     </bill>
+    
+    <bill>
+        <name>Declaration of War</name>
+        <description>A declaration of war.</description>
+        <cost frequency = "1">1000000000</cost>
+        <triggers>
+            <factor name = "foreignrelations" influence = "100" value = "0"/>
+        </triggers>
+        <impact>
+            <factor name = "war" value = "100"/>
+            <factor name = "foreignrelations" value = "-100"/>
+            </impact>
+    </bill>
+    
+    <bill>
+        <name>Name</name>
+        <description>Description</description>
+        <cost frequency = "4">10000000</cost>
+        <triggers>
+            <factor name = "environment" influence = "100" value = "25"/>
+        </triggers>
+        <impact>
+            <factor name = "environment" value = "6"/>
+        </impact>
+    </bill>
+    
+    <bill>
+        <name>Name</name>
+        <description>Description</description>
+        <cost frequency = "4">10000000</cost>
+        <triggers>
+            <factor name = "environment" influence = "100" value = "25"/>
+        </triggers>
+        <impact>
+            <factor name = "environment" value = "6"/>
+        </impact>
+    </bill>
+    
+    <bill>
+        <name>Name</name>
+        <description>Description</description>
+        <cost frequency = "4">10000000</cost>
+        <triggers>
+            <factor name = "environment" influence = "100" value = "25"/>
+        </triggers>
+        <impact>
+            <factor name = "environment" value = "6"/>
+        </impact>
+    </bill>
+    
+    <bill>
+        <name>Name</name>
+        <description>Description</description>
+        <cost frequency = "4">10000000</cost>
+        <triggers>
+            <factor name = "environment" influence = "100" value = "25"/>
+        </triggers>
+        <impact>
+            <factor name = "environment" value = "6"/>
+        </impact>
+    </bill>
+    
+    <bill>
+        <name>Name</name>
+        <description>Description</description>
+        <cost frequency = "4">10000000</cost>
+        <triggers>
+            <factor name = "environment" influence = "100" value = "25"/>
+        </triggers>
+        <impact>
+            <factor name = "environment" value = "6"/>
+        </impact>
+    </bill>
+    
+    <bill>
+        <name>Name</name>
+        <description>Description</description>
+        <cost frequency = "4">10000000</cost>
+        <triggers>
+            <factor name = "environment" influence = "100" value = "25"/>
+        </triggers>
+        <impact>
+            <factor name = "environment" value = "6"/>
+        </impact>
+    </bill>
+    
+    <bill>
+        <name>Name</name>
+        <description>Description</description>
+        <cost frequency = "4">10000000</cost>
+        <triggers>
+            <factor name = "environment" influence = "100" value = "25"/>
+        </triggers>
+        <impact>
+            <factor name = "environment" value = "6"/>
+        </impact>
+    </bill>
+    
+    <bill>
+        <name>Name</name>
+        <description>Description</description>
+        <cost frequency = "4">10000000</cost>
+        <triggers>
+            <factor name = "environment" influence = "100" value = "25"/>
+        </triggers>
+        <impact>
+            <factor name = "environment" value = "6"/>
+        </impact>
+    </bill>
+    
+    <bill>
+        <name>Name</name>
+        <description>Description</description>
+        <cost frequency = "4">10000000</cost>
+        <triggers>
+            <factor name = "environment" influence = "100" value = "25"/>
+        </triggers>
+        <impact>
+            <factor name = "environment" value = "6"/>
+        </impact>
+    </bill>
+    
+    <bill>
+        <name>Name</name>
+        <description>Description</description>
+        <cost frequency = "4">10000000</cost>
+        <triggers>
+            <factor name = "environment" influence = "100" value = "25"/>
+        </triggers>
+        <impact>
+            <factor name = "environment" value = "6"/>
+        </impact>
+    </bill>
+    
+    <bill>
+        <name>Name</name>
+        <description>Description</description>
+        <cost frequency = "4">10000000</cost>
+        <triggers>
+            <factor name = "environment" influence = "100" value = "25"/>
+        </triggers>
+        <impact>
+            <factor name = "environment" value = "6"/>
+        </impact>
+    </bill>
+    
+    <bill>
+        <name>Name</name>
+        <description>Description</description>
+        <cost frequency = "4">10000000</cost>
+        <triggers>
+            <factor name = "environment" influence = "100" value = "25"/>
+        </triggers>
+        <impact>
+            <factor name = "environment" value = "6"/>
+        </impact>
+    </bill>
+    <bill>
+        <name>Name</name>
+        <description>Description</description>
+        <cost frequency = "4">10000000</cost>
+        <triggers>
+            <factor name = "environment" influence = "100" value = "25"/>
+        </triggers>
+        <impact>
+            <factor name = "environment" value = "6"/>
+        </impact>
+    </bill>
+    
+    
     
 </bills>

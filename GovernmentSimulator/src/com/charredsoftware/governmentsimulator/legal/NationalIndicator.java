@@ -11,7 +11,7 @@ public enum NationalIndicator {
 	TECHNOLOGY(40, "technology"), ENVIRONMENT(35, "environment"), EDUCATION(40, "education"), ECONOMY(20, "economy"),
 	ENERGY(40, "energy"), UTILITIES(50, "utilities"), BIGBUSINESS(60, "bigbusiness"), SMALLBUSINESS(20, "smallbusiness"),
 	HEALTHCARE(30, "healthcare"), COMMUNICATIONS(50, "communications"), TRANSPORTATION(45, "transportation"),
-	FOREIGNRELATIONS(15, "foreignrelations"), SCIENCE(25, "science"), CIVILRIGHTS(75, "civilrights"), WAR(0, "war");
+	FOREIGNRELATIONS(95, "foreignrelations"), SCIENCE(25, "science"), CIVILRIGHTS(75, "civilrights"), WAR(0, "war");
 	
 	public int level, previous = -1;
 	public String label;

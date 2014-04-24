@@ -17,17 +17,21 @@ public class BillLineup {
 	}
 	
 	public Bill getNextBill(){
-		if(bills.size() == 0) return new Bill();
+		if(bills.size() == 0) return new Bill("Nullifcation Crisis", "Everything shall be nullified!", 0, 1, new Indicators(false), new Indicators(false));
 		
 		int highestPriority = bills.get(0).calculatePriority(indicators);
 		Bill highestBill = bills.get(0);
 		for(Bill b : bills){
 			int a = b.calculatePriority(indicators);
-			if(a > highestPriority) highestPriority = a;
-			highestBill = b;
+			if(a > highestPriority){
+				highestPriority = a;
+				highestBill = b;
+			}
 		}
 		
 		return highestBill;
 	}
+	
+	
 	
 }

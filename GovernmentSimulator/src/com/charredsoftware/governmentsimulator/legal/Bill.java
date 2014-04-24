@@ -11,13 +11,21 @@ import com.charredsoftware.governmentsimulator.util.Controller;
 
 public class Bill {
 
-	public int id;
+	public int id, frequency;
+	public long cost;
 	public String name, description;
-	public Indicators indicators;
+	public Indicators triggers, impact;
 	public VoteCard house, senate, president;
 	public boolean voted = false, alreadyShotDown = false;
 	
-	public Bill(){
+	public Bill(String name, String description, long cost, int frequency, Indicators triggers, Indicators impact){
+		Controller.bills.add(this);
+		this.name = name;
+		this.description = description;
+		this.cost = cost;
+		this.frequency = frequency;
+		this.triggers = triggers;
+		this.impact = impact;
 		house = new VoteCard(Job.REPRESENTATIVE);
 		senate = new VoteCard(Job.SENATOR);
 		president = new VoteCard(Job.PRESIDENT);
@@ -33,11 +41,18 @@ public class Bill {
 	public int calculatePriority(Indicators real){
 		int priority = 0;
 		for(NationalIndicator ind : Controller.indicators){
-			int influence = indicators.getInfluence(ind);
-			int netLevel = (100 - Math.abs(indicators.getIdeal(ind) - real.getLevel(ind))); //When closer to ideal, higher integer.
+			int influence = triggers.getInfluence(ind);
+			int netLevel = (100 - Math.abs(triggers.getIdeal(ind) - real.getLevel(ind))); //When closer to ideal, higher integer.
 			priority += netLevel * (influence / 100.00);
 		}
-		return priority;
+		int neededPriority = 0;
+		for(NationalIndicator ind : Controller.indicators){
+			int influence = triggers.getInfluence(ind);
+			int netLevel = (100 - Math.abs(triggers.getIdeal(ind) - real.getLevel(ind))); //When closer to ideal, higher integer.
+			priority += netLevel * (influence / 100.00);
+		}
+		
+		return (priority > neededPriority) ? priority : 0;
 	}
 	
 	public int getVote(Politician politician){

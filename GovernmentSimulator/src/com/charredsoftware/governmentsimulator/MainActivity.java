@@ -28,7 +28,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -36,6 +35,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.charredsoftware.governmentsimulator.legal.Bill;
+import com.charredsoftware.governmentsimulator.legal.BillLineup;
 import com.charredsoftware.governmentsimulator.legal.Indicators;
 import com.charredsoftware.governmentsimulator.legal.Party;
 import com.charredsoftware.governmentsimulator.legal.State;
@@ -50,6 +51,7 @@ import com.charredsoftware.governmentsimulator.util.Time;
 public class MainActivity extends Activity {
 
 	public static GameState state = GameState.LOADING, previous = GameState.LOADING;
+	public static BillLineup lineup;
 	private static Board board;
 	private static LinearLayout secondary;
 	private static EditText firstField, lastField, stockQuantityText, stockValueText;
@@ -66,6 +68,7 @@ public class MainActivity extends Activity {
 	private static boolean isOnClick = false;
 	private boolean updatingValues = false;
 	
+	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -190,9 +193,15 @@ public class MainActivity extends Activity {
 			}
 		});
 	
+		
 		reload();
 	}
 
+	private void startVotingSession(){
+		Bill nextBill = lineup.getNextBill();
+		Toast.makeText(board.getContext(), nextBill.calculatePriority(indicators) + ": " + nextBill.name, Toast.LENGTH_LONG).show();
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -260,6 +269,7 @@ public class MainActivity extends Activity {
 	    		previous = state;
 	    		state = GameState.STOCKS;
 	    	}else if(b.text.equals("Next Week")){
+	    		startVotingSession();
 	    		time.advanceWeek();
 	    	}else if(b.text.equals("Next Month")){
 	    		for(int i = 1; i <= 4; i ++) time.advanceWeek();
